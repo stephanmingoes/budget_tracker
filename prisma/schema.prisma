@@ -1,0 +1,66 @@
+// A user must be able to create an account
+// A user should be able to set a budget
+// -- A budget must be connected to an account
+// A user should be able to enter a transaction 
+// -- A transaction can be expense or income
+// -- A transaction must be connected to a budget (optional) and account (mandatory)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "cockroachdb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id          Int           @id @default(sequence())
+  userId      String
+  name        String
+  balance     Decimal
+  type        AccountType
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  Budget      Budget[]
+  Transaction Transaction[]
+
+  @@index([userId])
+}
+
+model Budget {
+  id          Int           @id @default(sequence())
+  accountId   Int
+  account     Account       @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  amount      Decimal
+  startDate   DateTime
+  endDate     DateTime
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  name        String
+  Transaction Transaction[]
+}
+
+model Transaction {
+  id        Int             @id @default(sequence())
+  accountId Int
+  account   Account         @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  budgetId  Int?
+  budget    Budget?         @relation(fields: [budgetId], references: [id], onDelete: SetNull)
+  amount    Decimal
+  date      DateTime
+  for       String
+  type      TransactionType
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+}
+
+enum TransactionType {
+  EXPENSE
+  INCOME
+}
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+}
