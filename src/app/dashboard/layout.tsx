@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = {
+const metadata: Metadata = {
   title: "Dashboard",
   description: "Budget tracker dashboard",
 };
