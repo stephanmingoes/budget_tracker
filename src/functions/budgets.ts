@@ -4,9 +4,9 @@ import { findAccountOrThrow } from "./accounts";
 import { Prisma } from "@prisma/client";
 
 export type GetBudgetIdsReturnType = Awaited<ReturnType<typeof getBudgetsIds>>;
-export async function getBudgetsIds(userId: string) {
+export async function getBudgetsIds(userId: string, accountId: number) {
   return await prisma.budget.findMany({
-    where: { account: { userId: userId } },
+    where: { account: { userId: userId, id: accountId } },
     select: { name: true, id: true, amount: true },
   });
 }

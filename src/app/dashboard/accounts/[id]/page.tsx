@@ -108,7 +108,7 @@ export default function Page({ params }: { params: { id: string } }) {
     isLoading: isBudgetsLoading,
     isError: isBudgetsError,
     refetch: budgetsRefetch,
-  } = useQuery("budgetIds", () => getBudgetIds(), {
+  } = useQuery("budgetIds", () => getBudgetIds(Number(params.id)), {
     onError(err) {
       toast({
         variant: "destructive",

@@ -14,9 +14,12 @@ export default async function handler(
     }
 
     if (req.method === "GET") {
+      const { accountId } = req.query;
+      if (typeof Number(accountId) !== "number")
+        return res.status(401).json({ message: "Bad Request" });
       return res.status(200).json({
         message: "Budgets fetched successfully",
-        data: await getBudgetsIds(userId),
+        data: await getBudgetsIds(userId, Number(accountId)),
       });
     }
   } catch (error) {
