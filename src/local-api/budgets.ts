@@ -9,8 +9,8 @@ import {
 } from "@/lib/types";
 import axios from "axios";
 
-export async function getBudgetIds() {
-  let queryString = `/api/budgets/getBudgetIds`;
+export async function getBudgetIds(accountId: number) {
+  let queryString = `/api/budgets/getBudgetIds?accountId=${accountId}`;
   const { data } = await axios.get(queryString);
   return data.data as GetBudgetIdsReturnType;
 }
