@@ -35,7 +35,7 @@ export default function Landing() {
               Get Started
             </Link>
             <Link
-              href="#"
+              href="https://github.com/stephanmingoes/budget_tracker"
               target="_blank"
               rel="noreferrer"
               className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
